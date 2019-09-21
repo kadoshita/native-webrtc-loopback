@@ -24,7 +24,7 @@ class CreateSDPCallback : public webrtc::CreateSessionDescriptionObserver {
                     std::function<void(const std::string&)> f)
       : success(s), failure(f) {}
   void OnSuccess(webrtc::SessionDescriptionInterface* desc) {
-    std::cout << __LINE__ << " " << __FUNCTION__ << std::endl;
+    std::cout << __FUNCTION__ << std::endl;
     if (success) {
       success(desc);
     }
@@ -45,7 +45,7 @@ class DummySetSessionDescriptionObserver
     return new rtc::RefCountedObject<DummySetSessionDescriptionObserver>();
   }
   virtual void OnSuccess() {
-    std::cout << __LINE__ << " " << __FUNCTION__ << std::endl;
+    std::cout << __FUNCTION__ << std::endl;
   }
   virtual void OnFailure(const std::string& error) {
     std::cout << __FUNCTION__ << " " << error << std::endl;
