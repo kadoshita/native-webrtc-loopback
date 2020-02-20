@@ -190,7 +190,7 @@ class LoopBack {
     rtc::WinsockInitializer winsock_initializer;
     rtc::InitializeSSL();
 
-    get_stats_observer = new GetStatsCallback();
+    get_stats_callback = new GetStatsCallback();
 
     auto peer_connection_callback = new PeerConnectionCallback();
     peer_connection = CreatePeerConnection(peer_connection_callback);
@@ -261,7 +261,7 @@ class LoopBack {
   }
   void GetStatsThread() {
     while (is_start) {
-      peer_connection->GetStats(get_stats_observer);
+      peer_connection->GetStats(get_stats_callback);
       std::this_thread::sleep_for(std::chrono::seconds(10));
     }
   }
@@ -269,7 +269,7 @@ class LoopBack {
  private:
   bool is_start = false;
   rtc::scoped_refptr<webrtc::PeerConnectionInterface> peer_connection;
-  GetStatsCallback* get_stats_observer;
+  GetStatsCallback* get_stats_callback;
   std::thread get_stats_thread;
 };
 int main() {
