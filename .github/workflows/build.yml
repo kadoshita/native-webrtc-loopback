@@ -10,11 +10,13 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Install depot_tools
+      working-directory: /
       run: git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
     - name: Set Path
-      run: export PATH=$(pwd)/depot_tools:$PATH
+      run: export PATH=/depot_tools:$PATH
 
     - name: Get libwebrtc
+      working-directory: /
       run: |
         mkdir webrtc-checkout
         cd webrtc-checkout
