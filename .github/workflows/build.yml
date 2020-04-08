@@ -8,14 +8,14 @@ jobs:
     runs-on: macos-latest
 
     steps:
-#     - uses: actions/checkout@v2
+    - uses: actions/checkout@v2
     - name: get libwebrtc
       run: |
-        git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
-        export PATH=$(pwd)/depot_tools:$PATH
-        mkdir webrtc-checkout
-        cd webrtc-checkout
-        fetch --nohooks webrtc
-        gclient sync
-        gn gen out/Default
-        ninja -C out/Default
+        wget https://github.com/shiguredo-webrtc-build/webrtc-build/releases/download/m84.4105.0.0/webrtc.macos.tar.gz
+        tar xvzf webrtc.macos.tar.gz
+    - name: build
+      run: |
+        mkdir build
+        cd build
+        cmake ..
+        make
