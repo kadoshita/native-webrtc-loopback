@@ -8,11 +8,9 @@ jobs:
     runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v2
+#     - uses: actions/checkout@v2
     - name: Install depot_tools
       run: git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
-    - name: get path
-      run: pwd
     - name: Set Path
       run: export PATH=/depot_tools:$PATH
 
