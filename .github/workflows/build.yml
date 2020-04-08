@@ -1,0 +1,27 @@
+name: Build
+
+on:
+  push:
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install depot_tools
+      run: |
+        git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
+        export PATH=$(pwd)/depot_tools:$PATH
+
+    # Runs a set of commands using the runners shell
+    - name: Get libwebrtc
+      run: |
+        mkdir webrtc-checkout
+        cd webrtc-checkout
+        fetch --nohooks webrtc
+        gclient sync
+    - name: Build
+      run: gn gen out/Default
+    - name: Compile
+      run: ninja -C out/Default
