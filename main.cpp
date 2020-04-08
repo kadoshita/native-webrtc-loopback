@@ -17,8 +17,8 @@
 
 class GetStatsCallback : public webrtc::RTCStatsCollectorCallback {
  public:
-  GetStatsCallback(){};
-  ~GetStatsCallback(){};
+  GetStatsCallback() {}
+  ~GetStatsCallback() {}
   void OnStatsDelivered(
       const rtc::scoped_refptr<const webrtc::RTCStatsReport>& report) override {
     std::cout << report.get()->ToJson() << std::endl;
@@ -46,13 +46,8 @@ class CreateSDPCallback : public webrtc::CreateSessionDescriptionObserver {
       success(desc);
     }
   }
-  void OnFailure(const std::string& error) {
-    std::cout << __FUNCTION__ << std::endl;
-    if (failure) {
-      failure(error);
-    } else {
-      std::cout << error << std::endl;
-    }
+  void OnFailure(webrtc::RTCError error) {
+    std::cout << error.message() << std::endl;
   }
 };
 class DummySetSessionDescriptionObserver
@@ -64,8 +59,8 @@ class DummySetSessionDescriptionObserver
   virtual void OnSuccess() {
     std::cout << __LINE__ << " " << __FUNCTION__ << std::endl;
   }
-  virtual void OnFailure(const std::string& error) {
-    std::cout << __FUNCTION__ << " " << error << std::endl;
+  virtual void OnFailure(webrtc::RTCError error) {
+    std::cout << error.message() << std::endl;
   }
 
  protected:
@@ -187,7 +182,9 @@ rtc::scoped_refptr<webrtc::PeerConnectionInterface> CreatePeerConnection(
 class LoopBack {
  public:
   LoopBack() {
+#ifdef WEBRTC_WIN
     rtc::WinsockInitializer winsock_initializer;
+#endif
     rtc::InitializeSSL();
 
     get_stats_callback = new GetStatsCallback();
