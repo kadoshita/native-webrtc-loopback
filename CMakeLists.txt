@@ -1,8 +1,11 @@
 cmake_minimum_required(VERSION 3.16)
 
-include_directories(/Users/sublimer/workspace/webrtc/webrtc/include)
-include_directories(/Users/sublimer/workspace/webrtc/webrtc/include/third_party/abseil-cpp)
-link_directories(/Users/sublimer/workspace/webrtc/webrtc/lib)
+set(WEBRTC_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/webrtc/include)
+set(WEBRTC_LIBRARY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/webrtc/lib)
+
+include_directories(${WEBRTC_INCLUDE_DIR})
+include_directories(${WEBRTC_INCLUDE_DIR}/third_party/abseil-cpp)
+link_directories(${WEBRTC_LIBRARY_DIR})
 add_executable(native-webrtc-loopback.out main.cpp)
 target_compile_features(native-webrtc-loopback.out PUBLIC cxx_std_14)
 
