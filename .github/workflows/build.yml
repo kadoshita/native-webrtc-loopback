@@ -9,18 +9,13 @@ jobs:
 
     steps:
 #     - uses: actions/checkout@v2
-    - name: Install depot_tools
-      run: git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
-    - name: Set Path
-      run: export PATH=$(pwd)/depot_tools:$PATH
-
-    - name: Get libwebrtc
+    - name: get libwebrtc
       run: |
+        git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
+        export PATH=$(pwd)/depot_tools:$PATH
         mkdir webrtc-checkout
         cd webrtc-checkout
         fetch --nohooks webrtc
         gclient sync
-    - name: Build
-      run: gn gen out/Default
-    - name: Compile
-      run: ninja -C out/Default
+        gn gen out/Default
+        ninja -C out/Default
