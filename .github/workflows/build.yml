@@ -18,6 +18,11 @@ jobs:
         cd build
         cmake .. -DTARGET="macos"
         cmake --build .
+    - name: Upload artifact
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: native-webrtc-loopback-macos
+        path: native-webrtc-loopback
         
   build-windows:
     runs-on: windows-latest
@@ -37,3 +42,8 @@ jobs:
           cd build
           cmake .. -G "Visual Studio 16 2019" -DTARGET="windows"
           cmake --build . --config Release
+      - name: Upload artifact
+        uses: actions/upload-artifact@v1.0.0
+        with:
+          name: native-webrtc-loopback-windows.exe
+          path: native-webrtc-loopback.exe
