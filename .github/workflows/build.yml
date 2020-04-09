@@ -31,7 +31,6 @@ jobs:
         run: |
           wget https://github.com/shiguredo-webrtc-build/webrtc-build/releases/download/m84.4105.0.0/webrtc.windows.zip
           unzip webrtc.windows.zip
-          ls
       - name: build
         run: |
           mkdir build
