@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
 
-set(TARGET "windows")
 set(WEBRTC_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/webrtc/include)
 
 if("${TARGET}" STREQUAL "windows")
@@ -48,5 +47,5 @@ elseif("${TARGET}" STREQUAL "macos")
         WEBRTC_POSIX
         WEBRTC_MAC
     )
-    target_link_libraries(native-webrtc-loopback webrtc)
+    target_link_libraries(native-webrtc-loopback ${WEBRTC_LIBRARY_DIR}/libwebrtc.a)
 endif()
