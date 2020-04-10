@@ -1,4 +1,4 @@
-name: CI
+name: Daily Build
 on:
   schedule:
     - cron: "0 8 * * *"
