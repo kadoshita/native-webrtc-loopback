@@ -1,8 +1,7 @@
-name: Daily Build
-
+name: daily-build
 on:
   schedule:
-    - cron: '0 8 * * *' # run at 8:00 and 17:00 JST
+    - cron: "0 8 * * *"
 
 jobs:
   build-macos:
