@@ -1,0 +1,50 @@
+name: Daily Build
+
+on:
+  schedule:
+    - cron: '0 8 * * *' # run at 8:00 and 17:00 JST
+
+jobs:
+  build-macos:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: get libwebrtc
+      run: |
+        wget https://github.com/shiguredo-webrtc-build/webrtc-build/releases/download/m84.4105.0.0/webrtc.macos.tar.gz
+        tar xvzf webrtc.macos.tar.gz
+    - name: build
+      run: |
+        mkdir build
+        cd build
+        cmake .. -DTARGET="macos"
+        cmake --build .
+    - name: Upload artifact
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: native-webrtc-loopback-macos
+        path: build/native-webrtc-loopback
+        
+  build-windows:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: install wget unzip
+      run: |
+        choco install Wget
+        choco install unzip
+    - name: get libwebrtc
+      run: |
+        wget https://github.com/shiguredo-webrtc-build/webrtc-build/releases/download/m84.4105.0.0/webrtc.windows.zip
+        unzip webrtc.windows.zip
+    - name: build
+      run: |
+        mkdir build
+        cd build
+        cmake .. -G "Visual Studio 16 2019" -DTARGET="windows"
+        cmake --build . --config Release
+    - name: Upload artifact
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: native-webrtc-loopback-windows.exe
+        path: build/Release/native-webrtc-loopback.exe
