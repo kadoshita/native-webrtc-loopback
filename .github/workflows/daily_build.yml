@@ -1,4 +1,4 @@
-name: Daily Build
+name: daily-build-workflow
 
 on:
   schedule:
