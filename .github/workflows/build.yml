@@ -10,7 +10,9 @@ jobs:
     - uses: actions/checkout@v2
     - name: get libwebrtc
       run: |
-        LIBWEBRTC_VERSION=$(curl -ss https://api.github.com/repos/shiguredo-webrtc-build/webrtc-build/releases/latest | jq '.tag_name' | sed s/\"//g)
+        LIBWEBRTC_VERSION=$(curl -ss https://api.github.com/repos/shiguredo-webrtc-build/webrtc-build/releases/latest | jq '.tag_name')
+        LIBWEBRTC_VERSION=$(echo $LIBWEBRTC_VERSION | sed s/\"//g)
+        echo $LIBWEBRTC_VERSION
         wget https://github.com/shiguredo-webrtc-build/webrtc-build/releases/download/$LIBWEBRTC_VERSION/webrtc.macos.tar.gz
         tar xvzf webrtc.macos.tar.gz
     - name: build
