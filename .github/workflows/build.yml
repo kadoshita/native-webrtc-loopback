@@ -33,9 +33,13 @@ jobs:
         run: |
           choco install Wget
           choco install unzip
+          choco install curl
+          choco install jq
+          choco install sed
       - name: get libwebrtc
         run: |
-          wget https://github.com/shiguredo-webrtc-build/webrtc-build/releases/download/m84.4105.0.0/webrtc.windows.zip
+          for /F "usebackq delims=" %tag in (`curl -ss -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/shiguredo-webrtc-build/webrtc-build/releases/latest | jq '.tag_name' | sed s/\"//g`) do set LIBWEBRTC_VERSION=%tag
+          wget https://github.com/shiguredo-webrtc-build/webrtc-build/releases/download/%LIBWEBRTC_VERSION%/webrtc.windows.zip
           unzip webrtc.windows.zip
       - name: build
         run: |
