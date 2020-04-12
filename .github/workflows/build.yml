@@ -31,6 +31,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: install wget unzip
         run: |
+          choco install Wget
           choco install unzip
           choco install curl
           choco install jq
@@ -39,7 +40,7 @@ jobs:
           $LIBWEBRTC_VERSION=curl -ss -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/shiguredo-webrtc-build/webrtc-build/releases/latest | jq '.tag_name'
           $LIBWEBRTC_VERSION=$LIBWEBRTC_VERSION -replace '"',''
           wget https://github.com/shiguredo-webrtc-build/webrtc-build/releases/download/${LIBWEBRTC_VERSION}/webrtc.windows.zip
-          unzip webrtc.windows.zip
+          # unzip webrtc.windows.zip
       - name: build
         run: |
           mkdir build
