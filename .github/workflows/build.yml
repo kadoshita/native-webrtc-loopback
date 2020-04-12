@@ -40,9 +40,9 @@ jobs:
           $LIBWEBRTC_VERSION=curl -ss -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/shiguredo-webrtc-build/webrtc-build/releases/latest | jq '.tag_name'
           $LIBWEBRTC_VERSION=$LIBWEBRTC_VERSION -replace '"',''
           wget https://github.com/shiguredo-webrtc-build/webrtc-build/releases/download/${LIBWEBRTC_VERSION}/webrtc.windows.zip
-          # unzip webrtc.windows.zip
       - name: build
         run: |
+          unzip webrtc.windows.zip
           mkdir build
           cd build
           cmake .. -G "Visual Studio 16 2019" -DTARGET="windows"
