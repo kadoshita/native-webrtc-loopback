@@ -13,6 +13,10 @@ jobs:
         LIBWEBRTC_VERSION=$(curl -ss -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/shiguredo-webrtc-build/webrtc-build/releases/latest | jq '.tag_name' | sed s/\"//g)
         wget https://github.com/shiguredo-webrtc-build/webrtc-build/releases/download/$LIBWEBRTC_VERSION/webrtc.macos.tar.gz
         tar xvzf webrtc.macos.tar.gz
+    - name: get boost
+      run: |
+        wget https://dl.bintray.com/boostorg/release/1.72.0/source/boost_1_72_0.tar.gz
+        tar xzvf boost_1_72_0.tar.gz
     - name: build
       run: |
         mkdir build
@@ -24,7 +28,7 @@ jobs:
       with:
         name: native-webrtc-loopback-macos
         path: build/native-webrtc-loopback
-        
+
   build-windows:
     runs-on: windows-latest
     steps:
@@ -40,9 +44,13 @@ jobs:
           $LIBWEBRTC_VERSION=curl -ss -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/shiguredo-webrtc-build/webrtc-build/releases/latest | jq '.tag_name'
           $LIBWEBRTC_VERSION=$LIBWEBRTC_VERSION -replace '"',''
           wget https://github.com/shiguredo-webrtc-build/webrtc-build/releases/download/${LIBWEBRTC_VERSION}/webrtc.windows.zip
+      - name: get boost
+        run: |
+          wget https://dl.bintray.com/boostorg/release/1.72.0/source/boost_1_72_0.zip
       - name: build
         run: |
           unzip webrtc.windows.zip
+          unzip boost_1_72_0.zip
           mkdir build
           cd build
           cmake .. -G "Visual Studio 16 2019" -DTARGET="windows"
