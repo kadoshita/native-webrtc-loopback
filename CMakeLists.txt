@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.16)
 
+set(BOOST_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/boost_1_72_0/include)
 set(WEBRTC_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/webrtc/include)
+
+set(BOOST_LIBRARY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/boost_1_72_0/lib)
 
 if("${TARGET}" STREQUAL "windows")
 set(WEBRTC_LIBRARY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/webrtc/release)
@@ -15,6 +18,7 @@ target_compile_features(native-webrtc-loopback PUBLIC cxx_std_14)
 
 include_directories(${WEBRTC_INCLUDE_DIR})
 include_directories(${WEBRTC_INCLUDE_DIR}/third_party/abseil-cpp)
+include_directories(${BOOST_INCLUDE_DIR})
 link_directories(${WEBRTC_LIBRARY_DIR})
 
 if("${TARGET}" STREQUAL "windows")

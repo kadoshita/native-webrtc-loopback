@@ -32,5 +32,6 @@
 *.app
 
 build/
+boost*/
 webrtc/
 .vscode/
