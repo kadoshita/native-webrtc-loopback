@@ -39,14 +39,15 @@ jobs:
           choco install unzip
           choco install curl
           choco install jq
+      - name: get boost
+        run: |
+          wget https://dl.bintray.com/boostorg/release/1.72.0/source/boost_1_72_0.zip
       - name: get libwebrtc
         run: |
           $LIBWEBRTC_VERSION=curl -ss -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/shiguredo-webrtc-build/webrtc-build/releases/latest | jq '.tag_name'
           $LIBWEBRTC_VERSION=$LIBWEBRTC_VERSION -replace '"',''
-          wget https://github.com/shiguredo-webrtc-build/webrtc-build/releases/download/${LIBWEBRTC_VERSION}/webrtc.windows.zip
-      - name: get boost
-        run: |
-          wget https://dl.bintray.com/boostorg/release/1.72.0/source/boost_1_72_0.zip
+          wget -o log.txt https://github.com/shiguredo-webrtc-build/webrtc-build/releases/download/${LIBWEBRTC_VERSION}/webrtc.windows.zip
+          type log.txt
       - name: build
         run: |
           unzip webrtc.windows.zip
