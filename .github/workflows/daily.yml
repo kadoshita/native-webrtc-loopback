@@ -20,32 +20,26 @@ jobs:
         cd build
         cmake .. -DTARGET="macos"
         cmake --build .
-    - name: Upload artifact
-      uses: actions/upload-artifact@v1.0.0
-      with:
-        name: native-webrtc-loopback-macos
-        path: build/native-webrtc-loopback
         
   build-windows:
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: install wget unzip
-      run: |
-        choco install Wget
-        choco install unzip
-    - name: get libwebrtc
-      run: |
-        wget https://github.com/shiguredo-webrtc-build/webrtc-build/releases/download/m84.4105.0.0/webrtc.windows.zip
-        unzip webrtc.windows.zip
-    - name: build
-      run: |
-        mkdir build
-        cd build
-        cmake .. -G "Visual Studio 16 2019" -DTARGET="windows"
-        cmake --build . --config Release
-    - name: Upload artifact
-      uses: actions/upload-artifact@v1.0.0
-      with:
-        name: native-webrtc-loopback-windows.exe
-        path: build/Release/native-webrtc-loopback.exe
+      - uses: actions/checkout@v2
+      - name: install wget unzip curl jq
+        run: |
+          choco install Wget
+          choco install unzip
+          choco install curl
+          choco install jq
+      - name: get libwebrtc
+        run: |
+          $LIBWEBRTC_VERSION=curl -ss -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/shiguredo-webrtc-build/webrtc-build/releases/latest | jq '.tag_name'
+          $LIBWEBRTC_VERSION=$LIBWEBRTC_VERSION -replace '"',''
+          wget https://github.com/shiguredo-webrtc-build/webrtc-build/releases/download/${LIBWEBRTC_VERSION}/webrtc.windows.zip
+      - name: build
+        run: |
+          unzip webrtc.windows.zip
+          mkdir build
+          cd build
+          cmake .. -G "Visual Studio 16 2019" -DTARGET="windows"
+          cmake --build . --config Release
