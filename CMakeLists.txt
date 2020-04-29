@@ -52,4 +52,26 @@ elseif("${TARGET}" STREQUAL "macos")
         WEBRTC_MAC
     )
     target_link_libraries(native-webrtc-loopback ${WEBRTC_LIBRARY_DIR}/libwebrtc.a)
+elseif("${TARGET}" STREQUAL "ubuntu")
+    target_link_libraries(native-webrtc-loopback
+        X11
+        Xau
+        Xdmcp
+        xcb
+        plds4
+        Xext
+        expat
+        dl
+        nss3
+        nssutil3
+        plc4
+        nspr4
+        rt
+        Threads::Threads
+    )
+
+    target_compile_definitions(native-webrtc-loopback PUBLIC
+        WEBRTC_POSIX
+    )
+    target_link_libraries(native-webrtc-loopback ${WEBRTC_LIBRARY_DIR}/libwebrtc.a)
 endif()
