@@ -53,6 +53,7 @@ elseif("${TARGET}" STREQUAL "macos")
     )
     target_link_libraries(native-webrtc-loopback ${WEBRTC_LIBRARY_DIR}/libwebrtc.a)
 elseif("${TARGET}" STREQUAL "ubuntu")
+    find_package(Threads REQUIRED)
     target_link_libraries(native-webrtc-loopback
         X11
         Xau
