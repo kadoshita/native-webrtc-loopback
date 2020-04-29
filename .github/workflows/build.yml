@@ -60,3 +60,28 @@ jobs:
         with:
           name: native-webrtc-loopback-windows.exe
           path: build/Release/native-webrtc-loopback.exe
+
+  build-ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: get libwebrtc
+        run: |
+          LIBWEBRTC_VERSION=$(curl -ss -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/shiguredo-webrtc-build/webrtc-build/releases/latest | jq '.tag_name' | sed s/\"//g)
+          wget https://github.com/shiguredo-webrtc-build/webrtc-build/releases/download/$LIBWEBRTC_VERSION/webrtc.ubuntu-18.04_x86_64.tar.gz
+          tar xvzf webrtc.ubuntu-18.04_x86_64.tar.gz
+      - name: get boost
+        run: |
+          wget https://dl.bintray.com/boostorg/release/1.72.0/source/boost_1_72_0.tar.gz
+          tar xzvf boost_1_72_0.tar.gz
+      - name: build
+        run: |
+          mkdir build
+          cd build
+          cmake .. -DTARGET="ubuntu"
+          cmake --build .
+      - name: Upload artifact
+        uses: actions/upload-artifact@v1.0.0
+        with:
+          name: native-webrtc-loopback-ubuntu
+          path: build/native-webrtc-loopback
