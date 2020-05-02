@@ -22,11 +22,13 @@ project(native-webrtc-loopback C CXX)
 add_executable(native-webrtc-loopback main.cpp)
 target_compile_features(native-webrtc-loopback PUBLIC cxx_std_14)
 
+if("${TARGET}" STREQUAL "ubuntu")
 target_compile_options(native-webrtc-loopback
 PRIVATE
   "$<$<COMPILE_LANGUAGE:CXX>:-nostdinc++>"
   "$<$<AND:$<COMPILE_LANGUAGE:CXX>,$<BOOL:LIBCXX_INCLUDE_DIR>>:-isystem${LIBCXX_INCLUDE_DIR}>"
 )
+endif()
 
 include_directories(${WEBRTC_INCLUDE_DIR})
 include_directories(${WEBRTC_INCLUDE_DIR}/third_party/abseil-cpp)
