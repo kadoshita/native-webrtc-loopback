@@ -22,6 +22,12 @@ project(native-webrtc-loopback C CXX)
 add_executable(native-webrtc-loopback main.cpp)
 target_compile_features(native-webrtc-loopback PUBLIC cxx_std_14)
 
+target_compile_options(native-webrtc-loopback
+PRIVATE
+  "$<$<COMPILE_LANGUAGE:CXX>:-nostdinc++>"
+  "$<$<AND:$<COMPILE_LANGUAGE:CXX>,$<BOOL:LIBCXX_INCLUDE_DIR>>:-isystem${LIBCXX_INCLUDE_DIR}>"
+)
+
 include_directories(${WEBRTC_INCLUDE_DIR})
 include_directories(${WEBRTC_INCLUDE_DIR}/third_party/abseil-cpp)
 include_directories(${BOOST_INCLUDE_DIR})
@@ -61,6 +67,8 @@ elseif("${TARGET}" STREQUAL "macos")
 elseif("${TARGET}" STREQUAL "ubuntu")
     find_package(Threads REQUIRED)
     target_link_libraries(native-webrtc-loopback
+        X11
+        dl
         Threads::Threads
     )
 
