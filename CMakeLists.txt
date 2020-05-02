@@ -5,6 +5,12 @@ set(WEBRTC_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/webrtc/include)
 
 set(BOOST_LIBRARY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/boost_1_72_0/lib)
 
+if("${TARGET}" STREQUAL "ubuntu")
+    set(CMAKE_C_COMPILER clang-8)
+    set(CMAKE_CXX_COMPILER clang++-8)
+    set(LIBCXX_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/libcxx/include)
+endif()
+
 if("${TARGET}" STREQUAL "windows")
 set(WEBRTC_LIBRARY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/webrtc/release)
 else()

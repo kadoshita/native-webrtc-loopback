@@ -34,4 +34,5 @@
 build/
 boost*/
 webrtc/
+libcxx/
 .vscode/
