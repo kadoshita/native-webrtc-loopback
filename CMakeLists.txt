@@ -55,19 +55,6 @@ elseif("${TARGET}" STREQUAL "macos")
 elseif("${TARGET}" STREQUAL "ubuntu")
     find_package(Threads REQUIRED)
     target_link_libraries(native-webrtc-loopback
-        X11
-        Xau
-        Xdmcp
-        xcb
-        plds4
-        Xext
-        expat
-        dl
-        nss3
-        nssutil3
-        plc4
-        nspr4
-        rt
         Threads::Threads
     )
 
