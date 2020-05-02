@@ -82,7 +82,7 @@ jobs:
           git reset --hard $WEBRTC_SRC_BUILDTOOLS_THIRD_PARTY_LIBCXX_TRUNK
           cd ../
       - name: get clang
-        run: apt install -y clang-8
+        run: sudo apt install -y clang-8
       - name: get boost
         run: |
           wget https://dl.bintray.com/boostorg/release/1.72.0/source/boost_1_72_0.tar.gz
