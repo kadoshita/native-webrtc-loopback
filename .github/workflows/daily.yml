@@ -50,3 +50,36 @@ jobs:
           cd build
           cmake .. -G "Visual Studio 16 2019" -DTARGET="windows"
           cmake --build . --config Release
+
+  build-ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: get libwebrtc
+        run: |
+          LIBWEBRTC_VERSION=$(curl -ss -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/shiguredo-webrtc-build/webrtc-build/releases/latest | jq '.tag_name' | sed s/\"//g)
+          wget https://github.com/shiguredo-webrtc-build/webrtc-build/releases/download/$LIBWEBRTC_VERSION/webrtc.ubuntu-18.04_x86_64.tar.gz
+          tar xvzf webrtc.ubuntu-18.04_x86_64.tar.gz
+      - name: load verison
+        run: |
+          . webrtc/VERSIONS
+          echo $WEBRTC_SRC_BUILDTOOLS_THIRD_PARTY_LIBCXX_TRUNK
+      - name: get libcxx
+        run: |
+          git clone https://chromium.googlesource.com/external/github.com/llvm/llvm-project/libcxx
+          cd libcxx
+          git fetch
+          git reset --hard $WEBRTC_SRC_BUILDTOOLS_THIRD_PARTY_LIBCXX_TRUNK
+          cd ../
+      - name: get clang
+        run: sudo apt install -y clang-8
+      - name: get boost
+        run: |
+          wget https://dl.bintray.com/boostorg/release/1.72.0/source/boost_1_72_0.tar.gz
+          tar xzvf boost_1_72_0.tar.gz
+      - name: build
+        run: |
+          mkdir build
+          cd build
+          cmake .. -DTARGET="ubuntu"
+          cmake --build .
