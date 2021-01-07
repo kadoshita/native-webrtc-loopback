@@ -13,7 +13,7 @@ jobs:
       run: |
         LIBWEBRTC_VERSION=$(curl -ss -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/shiguredo-webrtc-build/webrtc-build/releases/latest | jq '.tag_name' | sed s/\"//g)
         wget https://github.com/shiguredo-webrtc-build/webrtc-build/releases/download/$LIBWEBRTC_VERSION/webrtc.macos_x86_64.tar.gz
-        tar xvzf webrtc.macos.tar.gz
+        tar xvzf webrtc.macos_x86_64.tar.gz
     - name: get boost
       run: |
         wget https://dl.bintray.com/boostorg/release/1.72.0/source/boost_1_72_0.tar.gz
