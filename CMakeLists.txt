@@ -13,6 +13,8 @@ endif()
 
 if("${TARGET}" STREQUAL "windows")
 set(WEBRTC_LIBRARY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/webrtc/release)
+elseif("${TARGET}" STREQUAL "macos")
+set(WEBRTC_LIBRARY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/webrtc/release/lib)
 else()
 set(WEBRTC_LIBRARY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/webrtc/lib)
 endif()
