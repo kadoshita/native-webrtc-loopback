@@ -79,6 +79,7 @@ elseif("${TARGET}" STREQUAL "ubuntu")
     target_compile_definitions(native-webrtc-loopback PUBLIC
         WEBRTC_POSIX
         _LIBCPP_DISABLE_AVAILABILITY
+        _LIBCPP_ABI_UNSTABLE
     )
     target_link_libraries(native-webrtc-loopback ${WEBRTC_LIBRARY_DIR}/libwebrtc.a)
 endif()
