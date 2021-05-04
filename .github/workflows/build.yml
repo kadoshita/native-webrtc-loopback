@@ -15,7 +15,7 @@ jobs:
         tar xvzf webrtc.macos_x86_64.tar.gz
     - name: get boost
       run: |
-        wget https://dl.bintray.com/boostorg/release/1.72.0/source/boost_1_72_0.tar.gz
+        wget https://boostorg.jfrog.io/artifactory/main/release/1.75.0/source/boost_1_72_0.tar.gz
         tar xzvf boost_1_72_0.tar.gz
     - name: build
       run: |
@@ -41,7 +41,7 @@ jobs:
           choco install jq
       - name: get boost
         run: |
-          wget https://dl.bintray.com/boostorg/release/1.72.0/source/boost_1_72_0.zip
+          wget https://boostorg.jfrog.io/artifactory/main/release/1.72.0/source/boost_1_72_0.zip
       - name: get libwebrtc
         run: |
           $LIBWEBRTC_VERSION=curl -ss -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/shiguredo-webrtc-build/webrtc-build/releases/latest | jq '.tag_name'
@@ -85,7 +85,7 @@ jobs:
         run: sudo apt install -y clang-8
       - name: get boost
         run: |
-          wget https://dl.bintray.com/boostorg/release/1.72.0/source/boost_1_72_0.tar.gz
+          wget https://boostorg.jfrog.io/artifactory/main/release/1.75.0/source/boost_1_72_0.tar.gz
           tar xzvf boost_1_72_0.tar.gz
       - name: build
         run: |
