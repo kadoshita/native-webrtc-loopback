@@ -76,11 +76,17 @@ jobs:
           echo $WEBRTC_SRC_BUILDTOOLS_THIRD_PARTY_LIBCXX_TRUNK_COMMIT
       - name: get libcxx
         run: |
-          git clone https://chromium.googlesource.com/external/github.com/llvm/llvm-project/libcxx
+          git clone $WEBRTC_SRC_BUILDTOOLS_THIRD_PARTY_LIBCXX_TRUNK_URL
           cd libcxx
           git fetch
           git reset --hard $WEBRTC_SRC_BUILDTOOLS_THIRD_PARTY_LIBCXX_TRUNK_COMMIT
           cd ../
+          git clone $WEBRTC_SRC_BUILDTOOLS_URL
+          cd buildtools
+          git fetch
+          git reset --hard $WEBRTC_SRC_BUILDTOOLS_COMMIT
+          cd ../
+          cp ./buildtools/third_party/libc++/__config_site ./libcxx/include/
       - name: get clang
         run: sudo apt install -y clang-8
       - name: get boost
