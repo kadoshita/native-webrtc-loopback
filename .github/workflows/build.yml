@@ -84,7 +84,7 @@ jobs:
           git fetch
           git reset --hard $WEBRTC_SRC_BUILDTOOLS_THIRD_PARTY_LIBCXX_TRUNK_COMMIT
           cd ../
-          git clone $WEBRTC_SRC_BUILDTOOLS_URL
+          git clone https://chromium.googlesource.com/chromium/src/buildtools.git
           cd buildtools
           git fetch
           git reset --hard $WEBRTC_SRC_BUILDTOOLS_COMMIT
