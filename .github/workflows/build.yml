@@ -78,7 +78,7 @@ jobs:
           echo $WEBRTC_SRC_BUILDTOOLS_COMMIT
       - name: get libcxx
         run: |
-          git clone https://chromium.googlesource.com/external/github.com/llvm/llvm-project/libcxx
+          git clone $WEBRTC_SRC_BUILDTOOLS_THIRD_PARTY_LIBCXX_TRUNK_URL
           cd libcxx
           git fetch
           git reset --hard $WEBRTC_SRC_BUILDTOOLS_THIRD_PARTY_LIBCXX_TRUNK_COMMIT
