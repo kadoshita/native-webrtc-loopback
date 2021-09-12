@@ -73,12 +73,12 @@ jobs:
       - name: load verison
         run: |
           . webrtc/VERSIONS
+          echo $WEBRTC_SRC_BUILDTOOLS_THIRD_PARTY_LIBCXX_TRUNK_URL
           echo $WEBRTC_SRC_BUILDTOOLS_THIRD_PARTY_LIBCXX_TRUNK_COMMIT
-      - uses: actions/checkout@v2
-        with:
-          repository: 'https://chromium.googlesource.com/external/github.com/llvm/llvm-project/libcxx'
+          echo $WEBRTC_SRC_BUILDTOOLS_COMMIT
       - name: get libcxx
         run: |
+          git clone https://chromium.googlesource.com/external/github.com/llvm/llvm-project/libcxx
           cd libcxx
           git fetch
           git reset --hard $WEBRTC_SRC_BUILDTOOLS_THIRD_PARTY_LIBCXX_TRUNK_COMMIT
